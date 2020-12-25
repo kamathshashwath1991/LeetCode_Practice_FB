@@ -1,35 +1,50 @@
-class MinStack {
-    Stack<Integer> st;
-    Stack<Integer> min_st;
+class Node{
+    int x;
     int min;
-​
-    /** initialize your data structure here. */
-    public MinStack() {
-        st = new Stack<>();
-        min_st = new Stack<>();
-        min = Integer.MAX_VALUE;
-    }
+    Node prev;
     
-    public void push(int x) {
-        st.push(x);
-       if (min_st.isEmpty() || x <= min_st.peek()) {
-            min_st.push(x);
-       }
-    }
-    
-    public void pop() {
-        if (st.peek().equals(min_st.peek())){
-                min_st.pop();
-        }
-            st.pop();
-    }
-    
-    public int top() {
-        return st.peek();
-    }
-    
-    public int getMin() {
-        return min_st.peek();
+    public Node(int x, int min, Node prev){
+        this.x = x;
+        this.min = min;
+        this.prev = prev;
     }
 }
 ​
+class MinStack {
+​
+    Node tail;
+    /** initialize your data structure here. */
+    public MinStack() {
+        tail = null;
+    }
+    
+    public void push(int x) {
+        if (tail == null){
+            tail = new Node(x,x,tail);
+        }
+        else{
+            tail = new Node(x,Math.min(x,tail.min),tail);
+        }
+    }
+    
+    public void pop() {
+        tail = tail.prev;
+    }
+    
+    public int top() {
+        return tail.x;
+    }
+    
+    public int getMin() {
+        return tail.min;
+    }
+}
+​
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
