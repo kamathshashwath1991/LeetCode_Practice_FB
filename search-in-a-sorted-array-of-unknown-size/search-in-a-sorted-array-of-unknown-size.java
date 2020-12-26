@@ -9,29 +9,26 @@
 class Solution {
     public int search(ArrayReader reader, int target) {
         
-        int start = 0,end = start + 1;
-        while(reader.get(end) < target){
-            start = end;
-            end = end * 2;
+        int left = 0, right = left +1;
+        
+        while(reader.get(right) < target){
+            left = right;
+            right *= 2;
         }
         
-       return helper(reader,target,start,end);
-    }
-    
-    private int helper(ArrayReader reader, int target, int start, int end){
-        if (start > end){
-            return -1;
+        while(left <= right){
+            int mid = left + (right - left)/2;
+            if (reader.get(mid) == target){
+                return mid;
+            }
+            else if(reader.get(mid) > target){
+                right = mid - 1;
+            }
+            else{
+                left = mid +1;
+            }
         }
-        int mid = start + (end - start)/2;
         
-        if (reader.get(mid) == target){
-            return mid;
-        }
-        else if(reader.get(mid) > target){
-            return helper(reader,target,start,mid-1);
-        }
-        else{
-            return helper(reader,target,mid+1,end);
-        }
+        return -1;
     }
 }
