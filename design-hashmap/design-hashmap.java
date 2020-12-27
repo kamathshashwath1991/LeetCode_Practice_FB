@@ -1,32 +1,26 @@
-        if (pos < 0){
-            if (map[index] == null){
-                map[index] = new ArrayList<Pair<Integer,Integer>>();
-            }
-            map[index].add(new Pair(key,value));
-        }
-        else{
-            map[index].set(pos,new Pair(key,value));
-        }
+        map[index][nestedIndex] = new Node(key,value);
     }
-    
     /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
     public int get(int key) {
         int index = getIndex(key);
-        int pos = getPos(key,index);
-        if (pos < 0){
+        int nestedIndex = getNestedIndex(key);
+        if (map[index] == null){
             return -1;
         }
         else{
-            return map[index].get(pos).getValue();
+            if(map[index][nestedIndex] != null){
+                return map[index][nestedIndex].value;
+            } else {
+                return -1;
+            }
         }
     }
-    
     /** Removes the mapping of the specified value key if this map contains a mapping for the key */
     public void remove(int key) {
         int index = getIndex(key);
-        int pos = getPos(key,index);
-        if (pos >= 0){
-            map[index].remove(pos);
+        int nestedIndex = getNestedIndex(key);
+        if (map[index] != null && map[index][nestedIndex] != null){
+            map[index][nestedIndex] = null;
         }
     }
 }
