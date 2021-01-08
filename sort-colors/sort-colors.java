@@ -1,23 +1,23 @@
 class Solution {
     public void sortColors(int[] nums) {
-      int left = 0;int mid = 0, high = nums.length-1;
-        while(left <= high)
-        {
-            if (nums[left] == 0){
-                swap(nums,mid++,left++);
+        
+        int low = 0, mid = 0, high = nums.length-1;
+        while(low <= high){
+            if (nums[low] == 0){
+                swap(nums,low++,mid++);
             }
-            else if(nums[left] == 2){
-                swap(nums,high--,left);
+            else if(nums[low] == 2){
+                swap(nums,low,high--);
             }
             else{
-                left++;
+                low++;
             }
-        }        
+        }
     }
     
-    private void swap(int[] nums, int i, int j){
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    private void swap(int[] nums,int low,int high){
+        int temp = nums[low];
+        nums[low] = nums[high];
+        nums[high] = temp;
     }
 }
