@@ -14,24 +14,22 @@
  * }
  */
 class Solution {
-    int sum;
+    int sum = 0;
     public int sumNumbers(TreeNode root) {
-        sum = 0;
-        StringBuilder sb = new StringBuilder();
-        helper(root,sb);
+       helper(root,0); 
         return sum;
     }
     
-    private void helper(TreeNode root, StringBuilder sb){
-        if (root == null) return;
+    private void helper(TreeNode root, int curr){
+        if(root== null) return;
         
-        sb.append(root.val);
-        int length= sb.length();
-        if (root.left == null && root.right == null)
-            sum += Integer.valueOf(sb.toString());
+        if (root.left== null && root.right == null){
+            sum += curr*10 + root.val;
+            return;
+        }
+        curr = curr * 10 + root.val;
+        helper(root.left,curr);
+        helper(root.right,curr);
         
-        helper(root.left,sb);
-        sb.setLength(length);
-        helper(root.right,sb);
     }
 }
